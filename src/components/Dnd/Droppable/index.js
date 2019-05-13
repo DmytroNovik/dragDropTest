@@ -7,7 +7,7 @@ export default class Droppable extends Component {
         e.preventDefault();
         const data = e.dataTransfer.getData('transfer');
         e.target.appendChild(document.getElementById(data))
-    }
+    };
 
     allowDrop = (e) => {
         e.preventDefault()

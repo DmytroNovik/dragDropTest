@@ -1,4 +1,4 @@
-import {FIXED} from '../../constants/reduxConsts';
+import {DRAG, DROP, FIXED} from '../../constants/reduxConsts';
 
 const initialState = {
     available: [
@@ -24,11 +24,28 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case DROP: {
+            return {...state, available: state.available, visible: state.visible};
+        }
+        case DRAG: {
+            return action.columnOwner === 'available' ?
+                {
+                    ...state,
+                    available: state.available.find(item => item.id === action.column.id) !== undefined ? state.available : [...state.available, action.column],
+                    visible: state.visible.filter(item => item.id !== action.column.id)
+                }
+             : {
+                    ...state,
+                    visible: state.visible.find(item => item.id === action.column.id) !== undefined ? state.visible : [...state.visible, action.column],
+                    available: state.available.filter(item => item.id !== action.column.id)
+                }
+            }
         case FIXED: {
-            return {...state,
+            return {
+                ...state,
                 fixed: state.fixed.find(item => item.id === action.id) === undefined ?
                     [...state.fixed, state.available.find(item => item.id === action.id)] :
-                        state.fixed.filter(item => item.id !== action.id)
+                    state.fixed.filter(item => item.id !== action.id)
             }
         }
         default:

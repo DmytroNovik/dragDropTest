@@ -8,6 +8,7 @@ import Droppable from '../components/Dnd/Droppable'
 import * as actions from '../store/actions/dragDrop'
 
 class App extends Component {
+
     render() {
         const {available, fixed} = this.props;
         const {makeFixed} = this.props.actions;
@@ -22,7 +23,7 @@ class App extends Component {
                             <h4>Available</h4>
                             <Droppable id='available' className='droppable droppable-with-border'>
                                 {available.map(item => (
-                                        <Draggable key={item.id} onClick={() => makeFixed(item.id)}
+                                        <Draggable item={item} key={item.id} onClick={() => makeFixed(item.id)}
                                                    className={`${fixed.find(fixed => fixed.id === item.id) !== undefined ?
                                                        'fixed' : 'not-fixed'} droppable-item`}
                                                    id={item.id}>{item.name}</Draggable>
