@@ -9,8 +9,14 @@ import * as actions from '../store/actions/dragDrop'
 
 class App extends Component {
 
+    onSave = () => {
+        const {available, fixed, visible} = this.props;
+        alert('Here gonna be backend method to save data: check console ');
+        console.log('Fixed: ', fixed, "Visible: ", visible, "Available: ", available.filter(item => !visible.includes(item)))
+    };
+
     render() {
-        const {available, fixed} = this.props;
+        const {available, fixed, visible} = this.props;
         const {makeFixed} = this.props.actions;
 
         return (
@@ -20,10 +26,10 @@ class App extends Component {
                     <h3>Drag & drop between columns to configure visible data.</h3>
                     <div className='wrapper'>
                         <div className='available-column'>
-                            <h4>Available</h4>
+                            <h4>Available ({available.filter(item => !visible.includes(item)).length} items)</h4>
                             <Droppable id='available' className='droppable droppable-with-border'>
                                 {available.map(item => (
-                                        <Draggable item={item} key={item.id} onClick={() => makeFixed(item.id)}
+                                        <Draggable item={item} key={item.id} onDoubleClick={() => visible.includes(item) ? makeFixed(item.id) : null}
                                                    className={`${fixed.find(fixed => fixed.id === item.id) !== undefined ?
                                                        'fixed' : 'not-fixed'} droppable-item`}
                                                    id={item.id}>{item.name}</Draggable>
@@ -32,13 +38,13 @@ class App extends Component {
                             </Droppable>
                         </div>
                         <div className='visible-column'>
-                            <h4>Visible/ Fixed ({fixed.length} items)</h4>
+                            <h4>Visible ({visible.length} items) / Fixed ({fixed.length} items)</h4>
                             <Droppable id='visible' className='droppable'/>
                         </div>
                     </div>
                     <div className='buttons'>
-                        <Button variant="contained" color="primary">Save</Button>
-                        <Button variant="contained">Cancel</Button>
+                        <Button variant="contained" color="primary" onClick={this.onSave}>Save</Button>
+                        <Button variant="contained" onClick={() => window.location.reload()}>Cancel</Button>
                     </div>
                 </div>
             </div>

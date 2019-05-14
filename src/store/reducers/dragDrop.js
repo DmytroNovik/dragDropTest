@@ -1,4 +1,4 @@
-import {DRAG, DROP, FIXED} from '../../constants/reduxConsts';
+import {DRAG, FIXED} from '../../constants/reduxConsts';
 
 const initialState = {
     available: [
@@ -24,9 +24,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case DROP: {
-            return {...state, available: state.available, visible: state.visible};
-        }
         case DRAG: {
             return action.columnOwner === 'available' ?
                 {
@@ -37,7 +34,6 @@ export default function (state = initialState, action) {
              : {
                     ...state,
                     visible: state.visible.find(item => item.id === action.column.id) !== undefined ? state.visible : [...state.visible, action.column],
-                    available: state.available.filter(item => item.id !== action.column.id)
                 }
             }
         case FIXED: {

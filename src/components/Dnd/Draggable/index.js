@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Proptypes from 'prop-types';
 import {bindActionCreators} from "redux";
 import * as actions from "../../../store/actions/dragDrop";
 import {connect} from "react-redux";
@@ -23,19 +22,13 @@ class Draggable extends Component {
 
     render() {
         return (
-            <div id={this.props.id} draggable='true' onClick={this.props.onClick} onDragStart={this.drag}
+            <div id={this.props.id} draggable='true' onDoubleClick={this.props.onDoubleClick} onDragStart={this.drag}
                  onDragOver={this.noAllowDrop} onDragEnd={this.onDragEnd} className={this.props.className}>
                 {this.props.children}
             </div>
         )
     }
 }
-
-Draggable.propTypes = {
-    id: Proptypes.string,
-    style: Proptypes.object,
-    children: Proptypes.node,
-};
 
 const mapStateToProps = state => ({
     available: state.dragDrop.available,
