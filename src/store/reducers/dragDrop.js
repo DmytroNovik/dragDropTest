@@ -40,8 +40,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 fixed: state.fixed.find(item => item.id === action.id) === undefined ?
-                    [...state.fixed, state.available.find(item => item.id === action.id)] :
-                    state.fixed.filter(item => item.id !== action.id)
+                    state.visible.slice(0, action.index + 1) :
+                    state.visible.slice(0, action.index)
             }
         }
         default:

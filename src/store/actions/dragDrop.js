@@ -8,9 +8,10 @@ export const onDrag = (columnOwner, column) => {
     }
 };
 
-export const makeFixed = (id) => {
+export const makeFixed = (index, id) => {
     return {
         type: FIXED,
+        index,
         id
     }
 };

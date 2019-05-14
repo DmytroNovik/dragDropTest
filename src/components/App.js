@@ -10,9 +10,9 @@ import * as actions from '../store/actions/dragDrop'
 class App extends Component {
 
     onSave = () => {
-        const {available, fixed, visible} = this.props;
+        const {fixed, visible} = this.props;
         alert('Here gonna be backend method to save data: check console ');
-        console.log('Fixed: ', fixed, "Visible: ", visible, "Available: ", available.filter(item => !visible.includes(item)))
+        console.log('Fixed: ', fixed, "Visible: ", visible, 'Count of Visible Columns: ', visible.length)
     };
 
     render() {
@@ -29,7 +29,7 @@ class App extends Component {
                             <h4>Available ({available.filter(item => !visible.includes(item)).length} items)</h4>
                             <Droppable id='available' className='droppable droppable-with-border'>
                                 {available.map(item => (
-                                        <Draggable item={item} key={item.id} onDoubleClick={() => visible.includes(item) ? makeFixed(item.id) : null}
+                                        <Draggable item={item} key={item.id} onDoubleClick={() => visible.includes(item) ? makeFixed(visible.indexOf(item), item.id) : null}
                                                    className={`${fixed.find(fixed => fixed.id === item.id) !== undefined ?
                                                        'fixed' : 'not-fixed'} droppable-item`}
                                                    id={item.id}>{item.name}</Draggable>
